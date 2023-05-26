@@ -15,5 +15,5 @@ npm run api:dev
 
 ### Build userop.js
 ```
-npm run userop:dev
+npm run userop:build
 ```
