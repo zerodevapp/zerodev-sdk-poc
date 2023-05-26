@@ -1,0 +1,12 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "userop.js",
+    "zerodev-api",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}

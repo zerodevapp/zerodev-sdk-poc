@@ -1,0 +1,6 @@
+{
+  "name": "@zerodevapp/eip1993-provider",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT"
+}
