@@ -4,17 +4,7 @@ import { Router } from 'itty-router';
 const router = Router();
 
 // GET collection index
-router.get('/api/todos', () => new Response('Todos Index!'));
-
-// GET item
-router.get('/api/todos/:id', ({ params }) => new Response(`Todo #${params.id}`));
-
-// POST to the collection (we'll use async here)
-router.post('/api/todos', async (request) => {
-	const content = await request.json();
-
-	return new Response('Creating Todo: ' + JSON.stringify(content));
-});
+router.get('/create-userop', () => new Response('Todos Index!'));
 
 // 404 for everything else
 router.all('*', () => new Response('Not Found.', { status: 404 }));

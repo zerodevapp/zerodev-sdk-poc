@@ -6,6 +6,10 @@
     "zerodev-api",
     "packages/*"
   ],
+  "scripts": {
+    "api:dev": "cd zerodev-api && npm run start",
+    "userop:build": "cd userop.js && npm run build"
+  },
   "devDependencies": {
     "lerna": "^4.0.0"
   }
