@@ -21,6 +21,8 @@ npm run userop:build
 ## Endpoints
 
 ### /create-userop
+
+#### Regular
 ```typescript
 const createUserOpResponse = await fetch('https://zerodev-api.zobeir.workers.dev/create-userop', {
     method: 'post',
@@ -35,6 +37,33 @@ const createUserOpResponse = await fetch('https://zerodev-api.zobeir.workers.dev
             value,
             data
         }
+    }),
+})
+```
+
+#### Batch
+```typescript
+const createUserOpResponse = await fetch('https://zerodev-api.zobeir.workers.dev/create-userop', {
+    method: 'post',
+    headers: {
+        "content-type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify({
+        address, // SIGNER ADDRESS
+        projectId,
+        executionType: 'BATCH',
+        request: [
+            {
+                to,
+                value,
+                data
+            },
+            {
+                to,
+                value,
+                data
+            }
+        ]
     }),
 })
 ```

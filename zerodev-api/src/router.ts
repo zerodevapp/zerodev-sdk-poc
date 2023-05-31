@@ -1,5 +1,5 @@
 import { Router } from 'itty-router';
-import { Client, IUserOperation, Presets, UserOperationMiddlewareCtx } from "userop";
+import { Client, IUserOperation, IUserOperationBuilder, Presets, UserOperationMiddlewareCtx } from "userop";
 import { ethers } from 'ethers'
 import { verifyingPaymaster } from 'userop/dist/preset/middleware';
 import { BACKEND_URL, BUNDLER_URL, CHAIN_ID_TO_PAYMASTER_API } from './constants';
@@ -38,13 +38,36 @@ async function getProjectChainId(projectId: string): Promise<number> {
     throw Error("Invalid project id.")
 }
 
+interface CreateUserOpCall {
+    to: string;
+    value: string;
+    data: string
+}
+
+interface CreateUserOpRegular {
+    address: string,
+    projectId: string,
+    executionType: 'REGULAR',
+    request: CreateUserOpCall | CreateUserOpCall[]
+}
+
+interface CreateUserOpBatch {
+    address: string,
+    projectId: string,
+    executionType: 'BATCH',
+    request: CreateUserOpCall[]
+}
+
+type CreateUserOpBody = CreateUserOpRegular | CreateUserOpBatch
+
 router.post('/create-userop', async (request) => {
     try {
         const { 
             address, 
             projectId,
+            executionType = 'REGULAR',
             request: transactionRequest,
-        } = await (request as unknown as Request).json() as { address: 'string', projectId: string, request: {to: string, value: string, data: string} }
+        } = await (request as unknown as Request).json() as CreateUserOpBody
 
         const chainId = await getProjectChainId(projectId)
         const provider = new ethers.providers.JsonRpcProvider({url: BUNDLER_URL, headers: { projectId }, skipFetchSetup: true}, chainId)
@@ -56,8 +79,20 @@ router.post('/create-userop', async (request) => {
         });
         const client = await Client.init(provider, kernelAccount.entryPoint.address, chainId);
 
+        let builder: IUserOperationBuilder
+        if (executionType === 'REGULAR') {
+            if (Array.isArray(transactionRequest)) throw Error('body.request cannot be an array when executionType is REGULAR')
+            builder = kernelAccount.execute(transactionRequest.to, transactionRequest.value, transactionRequest.data)
+        } else if (executionType === 'BATCH') {
+            if (!Array.isArray(transactionRequest)) throw Error('body.request must be an array when executionType is BATCH')
+            builder = kernelAccount.executeBatch(transactionRequest)
+        } else {
+            throw Error('Builder must be initiated!')
+        }
+
+
         const userOp = {
-            ...await client.buildUserOperation(kernelAccount.execute(transactionRequest.to, transactionRequest.value, transactionRequest.data)), 
+            ...await client.buildUserOperation(builder), 
             signature: '0x'
         }
 

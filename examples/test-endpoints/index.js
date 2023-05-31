@@ -25,11 +25,19 @@ const main = async () => {
     body: JSON.stringify({
       address,
       projectId,
-      request: {
-        to: contractAddress,
-        value: 0,
-        data
-      }
+      executionType: 'BATCH',
+      request: [
+        {
+          to: contractAddress,
+          value: 0,
+          data
+        },
+        {
+          to: contractAddress,
+          value: 0,
+          data
+        }
+      ]
     }),
   })
   const {userOp, userOpHash} = await createUserOpResponse.json()
