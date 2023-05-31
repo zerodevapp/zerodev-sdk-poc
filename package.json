@@ -4,11 +4,13 @@
   "workspaces": [
     "userop.js",
     "zerodev-api",
-    "packages/*"
+    "packages/*",
+    "examples/*"
   ],
   "scripts": {
     "api:dev": "cd zerodev-api && npm run start",
-    "userop:build": "cd userop.js && npm run build"
+    "userop:build": "cd userop.js && npm run build",
+    "examples:test-endpoints": "cd examples/test-endpoints && node ."
   },
   "devDependencies": {
     "lerna": "^4.0.0"

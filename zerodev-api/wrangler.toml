@@ -1,6 +1,7 @@
 name = "zerodev-api"
 main = "src/worker.ts"
 compatibility_date = "2023-05-26"
+node_compat = true
 
 # # KV Namespace binding - For more information: https://developers.cloudflare.com/workers/runtime-apis/kv
 # [[kv_namespaces]]

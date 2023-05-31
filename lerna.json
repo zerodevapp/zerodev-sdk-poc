@@ -2,7 +2,8 @@
   "packages": [
     "userop.js",
     "zerodev-api",
-    "packages/*"
+    "packages/*",
+    "examples/*"
   ],
   "npmClient": "yarn",
   "useWorkspaces": true,
