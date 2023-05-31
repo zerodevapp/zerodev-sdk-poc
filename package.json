@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "api:dev": "cd zerodev-api && npm run start",
+    "api:deploy": "cd zerodev-api && npm run deploy",
     "userop:build": "cd userop.js && npm run build",
     "examples:test-endpoints": "cd examples/test-endpoints && node ."
   },

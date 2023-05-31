@@ -22,7 +22,7 @@ npm run userop:build
 
 ### /create-userop
 ```typescript
-const createUserOpResponse = await fetch('http://127.0.0.1:8787/create-userop', {
+const createUserOpResponse = await fetch('https://zerodev-api.zobeir.workers.dev/create-userop', {
     method: 'post',
     headers: {
         "content-type": "application/json;charset=UTF-8",
@@ -41,7 +41,7 @@ const createUserOpResponse = await fetch('http://127.0.0.1:8787/create-userop', 
 
 ### /send-userop
 ```typescript
-const sendUserOpResponse = await fetch('http://127.0.0.1:8787/send-userop', {
+const sendUserOpResponse = await fetch('https://zerodev-api.zobeir.workers.dev/send-userop', {
     method: 'post',
     headers: {
         "content-type": "application/json;charset=UTF-8",
@@ -56,12 +56,12 @@ const sendUserOpResponse = await fetch('http://127.0.0.1:8787/send-userop', {
 ## Usage
 ```typescript
 
-  const createUserOpResponse = await fetch('http://127.0.0.1:8787/create-userop', {...})
+  const createUserOpResponse = await fetch('https://zerodev-api.zobeir.workers.dev/create-userop', {...})
   const {userOp, userOpHash} = await createUserOpResponse.json()
 
   const signedMessage = await signer.signMessage(ethers.utils.arrayify(userOpHash))
 
-  const sendUserOpResponse = await fetch('http://127.0.0.1:8787/send-userop', {
+  const sendUserOpResponse = await fetch('https://zerodev-api.zobeir.workers.dev/send-userop', {
     ...,
     body: JSON.stringify({
       userOp: {...userOp, signature: signedMessage},
