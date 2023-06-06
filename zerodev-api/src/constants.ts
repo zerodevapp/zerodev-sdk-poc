@@ -17,3 +17,5 @@ export const CHAIN_ID_TO_PAYMASTER_API: {[key: number]: string} = {
     97: 'https://api.stackup.sh/v1/paymaster/6d039ff51991d6339cf0798fe9ca038708049aa4dae56b1a2740a11b7b45ed93',
     84531: 'https://api.pimlico.io/v1/base-goerli/rpc?apikey=6dbca556-d64c-4469-b8f6-dca03f9f373e',
 }
+
+export const DEFAULT_SESSION_KEY_PLUGIN_ADDRESS = '0x6E2631aF80bF7a9cEE83F590eE496bCc2E40626D'

@@ -11,7 +11,8 @@
     "api:dev": "cd zerodev-api && npm run start",
     "api:deploy": "cd zerodev-api && npm run deploy",
     "userop:build": "cd userop.js && npm run build",
-    "examples:test-endpoints": "cd examples/test-endpoints && node ."
+    "examples:test-endpoints": "cd examples/test-endpoints && node .",
+    "examples:test-session-key-revocation": "cd examples/test-session-key-revocation && node ."
   },
   "devDependencies": {
     "lerna": "^4.0.0"
