@@ -100,6 +100,24 @@ const sendUserOpResponse = await fetch('https://zerodev-api.zobeir.workers.dev/s
 ```
 
 
+### /create-revoke-session-key-user-op
+
+#### Regular
+```typescript
+const createUserOpResponse = await fetch('https://zerodev-api.zobeir.workers.dev/create-revoke-session-key-user-op', {
+    method: 'post',
+    headers: {
+        "content-type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify({
+        address, // SIGNER ADDRESS
+        projectId,
+        publicSessionKey
+    }),
+})
+```
+
+
 ## Testing
 ```
 npm run api:dev
