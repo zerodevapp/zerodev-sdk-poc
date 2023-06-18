@@ -1,7 +1,7 @@
 import { Client, IUserOperationBuilder, Presets, UserOperationMiddlewareCtx } from "userop";
 import { ethers } from 'ethers'
 import { verifyingPaymaster } from 'userop/dist/preset/middleware';
-import {  BUNDLER_URL, CHAIN_ID_TO_PAYMASTER_API } from '../../constants';
+import {  BUNDLER_URL, PAYMASTER_URL } from '../../constants';
 import { getProjectChainId } from "../../utilities";
 import { CreateUserOpOptions } from "../../../types";
 
@@ -14,7 +14,9 @@ async function createUserOp({
     try {
         const chainId = await getProjectChainId(projectId)
         const provider = new ethers.providers.JsonRpcProvider({url: BUNDLER_URL, headers: { projectId }, skipFetchSetup: true}, chainId)
-        const paymasterRpcProvider = new ethers.providers.JsonRpcProvider({url: CHAIN_ID_TO_PAYMASTER_API[chainId], skipFetchSetup: true}, chainId)
+        const paymasterRpcProvider = new ethers.providers.JsonRpcProvider({url: PAYMASTER_URL, skipFetchSetup: true, headers: {
+            projectId
+        }}, chainId)
         const kernelAccount = await Presets.Builder.KernelAccount.init({
             address,
             provider,

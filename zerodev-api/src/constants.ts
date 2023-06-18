@@ -1,5 +1,6 @@
 export const BUNDLER_URL = 'https://v0-6-meta-bundler.onrender.com'
 export const BACKEND_URL = 'https://prod-api.zerodev.app'
+export const PAYMASTER_URL = 'https://v0-6-paymaster.onrender.com'
   
 
 export const CHAIN_ID_TO_PAYMASTER_API: {[key: number]: string} = {
