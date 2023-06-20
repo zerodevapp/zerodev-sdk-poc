@@ -1,8 +1,9 @@
 import { Router } from 'itty-router';
 import createUserOp from './handlers/createUserOp';
 import sendUserOp from './handlers/sendUserOp';
-import { CreateRevokeSessionKeyUserOpOptions, CreateUserOpOptions, SendUserOpOptions } from '../../types';
+import { CreateRevokeSessionKeyUserOpOptions, CreateUserOpOptions, GetCounterFactualAddressOptions, SendUserOpOptions } from '../../types';
 import createRevokeSessionUserOp from './handlers/createRevokeSessionUserOp';
+import getCounterFactualAddress from './handlers/getCounterFactualAddress';
 
 // now let's create a router (note the lack of "new")
 const router = Router();
@@ -30,6 +31,14 @@ router.post('/send-userop', async (request) => {
     const sentUserOp = await sendUserOp(await (request as unknown as Request).json() as SendUserOpOptions)
     if (sentUserOp) {
         return new Response(JSON.stringify(sentUserOp), defaultInit)
+    }
+    return new Response('Something went wrong.', errorResponseInit)
+});
+
+router.post('/get-counter-factual-address', async (request) => {
+    const counterFactualAddress = await getCounterFactualAddress(await (request as unknown as Request).json() as GetCounterFactualAddressOptions)
+    if (counterFactualAddress) {
+        return new Response(counterFactualAddress, defaultInit)
     }
     return new Response('Something went wrong.', errorResponseInit)
 });

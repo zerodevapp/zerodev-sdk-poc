@@ -22,6 +22,12 @@ export interface CreateUserOpBatchOptions {
 
 export type CreateUserOpOptions = CreateUserOpRegularOptions | CreateUserOpBatchOptions
 
+export type GetCounterFactualAddressOptions = {
+    address: string;
+    projectId: string;
+    index?: number
+}
+
 export type SendUserOpOptions = {
     userOp: IUserOperation, 
     projectId: string,

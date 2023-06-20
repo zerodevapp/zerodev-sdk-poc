@@ -1,4 +1,5 @@
 const { Contract, Wallet, providers, ethers } = require('ethers')
+// const projectId = '1ab43d67-98f2-4f67-88e8-397e0799f92c'
 const projectId = 'd00dbcef-2f10-479e-8c10-28a9fd95717d'
 
 const contractAddress = '0x34bE7f35132E97915633BC1fc020364EA5134863'
@@ -17,10 +18,22 @@ const requestInit = {
 const main = async () => {
   const signer = new Wallet('468f0c80d5336c4a45be71fa19b77e9320dc0abaea4fd018e0c49aca90c1db78').connect(new providers.InfuraProvider(80001, 'f36f7f706a58477884ce6fe89165666c'))
   const address = await signer.getAddress()
-  const nftContract = new Contract(contractAddress, contractABI, signer)
-  const data = nftContract.interface.encodeFunctionData('mint', [address])
 
-  const createUserOpResponse = await fetch('http://127.0.0.1:8787/create-userop', {
+  const getCounterFactualAddressResponse = await fetch('https://zerodev-api.zobeir.workers.dev/get-counter-factual-address', {
+    ...requestInit,
+    body: JSON.stringify({
+      address,
+      projectId,
+      index: 1
+    }),
+  })
+
+  const zeroDevAddress = await getCounterFactualAddressResponse.text()
+
+  const nftContract = new Contract(contractAddress, contractABI, signer)
+  const data = nftContract.interface.encodeFunctionData('mint', [zeroDevAddress])
+
+  const createUserOpResponse = await fetch('https://zerodev-api.zobeir.workers.dev/create-userop', {
     ...requestInit,
     body: JSON.stringify({
       address,
@@ -44,7 +57,7 @@ const main = async () => {
 
   const signedMessage = await signer.signMessage(ethers.utils.arrayify(userOpHash))
 
-  const sendUserOpResponse = await fetch('http://127.0.0.1:8787/send-userop', {
+  const sendUserOpResponse = await fetch('https://zerodev-api.zobeir.workers.dev/send-userop', {
     ...requestInit,
     body: JSON.stringify({
       userOp: {...userOp, signature: signedMessage},
