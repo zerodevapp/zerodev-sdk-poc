@@ -21,6 +21,8 @@ npm run userop:build
 ## Endpoints
 
 ### /get-counter-factual-address
+
+#### Regular
 ```typescript
 const createUserOpResponse = await fetch('https://zerodev-api.zobeir.workers.dev/get-counter-factual-address', {
     method: 'post',

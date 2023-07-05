@@ -38,7 +38,7 @@ router.post('/send-userop', async (request) => {
 router.post('/get-counter-factual-address', async (request) => {
     const counterFactualAddress = await getCounterFactualAddress(await (request as unknown as Request).json() as GetCounterFactualAddressOptions)
     if (counterFactualAddress) {
-        return new Response(counterFactualAddress, defaultInit)
+        return new Response(JSON.stringify({ counterFactualAddress }), defaultInit)
     }
     return new Response('Something went wrong.', errorResponseInit)
 });

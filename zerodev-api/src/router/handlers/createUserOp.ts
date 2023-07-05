@@ -1,5 +1,5 @@
 import { Client, IUserOperationBuilder, Presets, UserOperationMiddlewareCtx } from "userop";
-import { ethers } from 'ethers'
+import { ethers, BigNumber } from 'ethers'
 import { verifyingPaymaster } from 'userop/dist/preset/middleware';
 import {  BUNDLER_URL, PAYMASTER_URL } from '../../constants';
 import { getProjectChainId } from "../../utilities";
@@ -27,10 +27,10 @@ async function createUserOp({
         let builder: IUserOperationBuilder
         if (executionType === 'REGULAR') {
             if (Array.isArray(transactionRequest)) throw Error('body.request cannot be an array when executionType is REGULAR')
-            builder = kernelAccount.execute(transactionRequest.to, transactionRequest.value, transactionRequest.data)
+            builder = kernelAccount.execute(transactionRequest.to, BigNumber.from((transactionRequest.value ?? 0).toString()), transactionRequest.data || '0x')
         } else if (executionType === 'DELEGATE') {
             if (Array.isArray(transactionRequest)) throw Error('body.request cannot be an array when executionType is DELEGATE')
-            builder = kernelAccount.executeDelegate(transactionRequest.to, transactionRequest.value, transactionRequest.data)
+            builder = kernelAccount.executeDelegate(transactionRequest.to, BigNumber.from((transactionRequest.value ?? 0).toString()), transactionRequest.data || '0x')
         } else if (executionType === 'BATCH') {
             if (!Array.isArray(transactionRequest)) throw Error('body.request must be an array when executionType is BATCH')
             builder = kernelAccount.executeBatch(transactionRequest)

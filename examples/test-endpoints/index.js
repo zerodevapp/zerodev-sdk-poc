@@ -28,7 +28,7 @@ const main = async () => {
     }),
   })
 
-  const zeroDevAddress = await getCounterFactualAddressResponse.text()
+  const zeroDevAddress = (await getCounterFactualAddressResponse.json()).counterFactualAddress
 
   const nftContract = new Contract(contractAddress, contractABI, signer)
   const data = nftContract.interface.encodeFunctionData('mint', [zeroDevAddress])
