@@ -24,7 +24,7 @@ router.post('/create-userop', async (request) => {
     if (createdUserOp) {
         return new Response(JSON.stringify(createdUserOp), defaultInit)
     }
-    return new Response('Something went wrong.', errorResponseInit)
+    return new Response(JSON.stringify({error: {meesage: 'Something went wrong.'}}), errorResponseInit)
 });
 
 router.post('/send-userop', async (request) => {
@@ -32,7 +32,7 @@ router.post('/send-userop', async (request) => {
     if (sentUserOp) {
         return new Response(JSON.stringify(sentUserOp), defaultInit)
     }
-    return new Response('Something went wrong.', errorResponseInit)
+    return new Response(JSON.stringify({error: {meesage: 'Something went wrong.'}}), errorResponseInit)
 });
 
 router.post('/get-counter-factual-address', async (request) => {
@@ -40,7 +40,7 @@ router.post('/get-counter-factual-address', async (request) => {
     if (counterFactualAddress) {
         return new Response(JSON.stringify({ counterFactualAddress }), defaultInit)
     }
-    return new Response('Something went wrong.', errorResponseInit)
+    return new Response(JSON.stringify({error: {meesage: 'Something went wrong.'}}), errorResponseInit)
 });
 
 router.post('/create-revoke-session-key-user-op', async (request) => {
@@ -48,8 +48,7 @@ router.post('/create-revoke-session-key-user-op', async (request) => {
     if (createdUserOp) {
         return new Response(JSON.stringify(createdUserOp), defaultInit)
     }
-    return new Response('Something went wrong.', errorResponseInit)
-
+    return new Response(JSON.stringify({error: {meesage: 'Something went wrong.'}}), errorResponseInit)
 });
 
 // 404 for everything else
