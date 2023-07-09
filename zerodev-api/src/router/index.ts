@@ -20,33 +20,49 @@ const errorResponseInit = {
 }
 
 router.post('/create-userop', async (request) => {
-    const createdUserOp = await createUserOp(await (request as unknown as Request).json() as CreateUserOpOptions)
-    if (createdUserOp) {
-        return new Response(JSON.stringify(createdUserOp), defaultInit)
+    try {
+        const createdUserOp = await createUserOp(await (request as unknown as Request).json() as CreateUserOpOptions)
+        if (createdUserOp) {
+            return new Response(JSON.stringify(createdUserOp), defaultInit)
+        }
+    } catch(e) {
+        return new Response(JSON.stringify({error: {meesage: (e as Error).message}}), errorResponseInit)
     }
     return new Response(JSON.stringify({error: {meesage: 'Something went wrong.'}}), errorResponseInit)
 });
 
 router.post('/send-userop', async (request) => {
-    const sentUserOp = await sendUserOp(await (request as unknown as Request).json() as SendUserOpOptions)
-    if (sentUserOp) {
-        return new Response(JSON.stringify(sentUserOp), defaultInit)
+    try {
+        const sentUserOp = await sendUserOp(await (request as unknown as Request).json() as SendUserOpOptions)
+        if (sentUserOp) {
+            return new Response(JSON.stringify(sentUserOp), defaultInit)
+        }
+    } catch(e) {
+        return new Response(JSON.stringify({error: {meesage: (e as Error).message}}), errorResponseInit)
     }
     return new Response(JSON.stringify({error: {meesage: 'Something went wrong.'}}), errorResponseInit)
 });
 
 router.post('/get-counter-factual-address', async (request) => {
-    const counterFactualAddress = await getCounterFactualAddress(await (request as unknown as Request).json() as GetCounterFactualAddressOptions)
-    if (counterFactualAddress) {
-        return new Response(JSON.stringify({ counterFactualAddress }), defaultInit)
+    try {
+        const counterFactualAddress = await getCounterFactualAddress(await (request as unknown as Request).json() as GetCounterFactualAddressOptions)
+        if (counterFactualAddress) {
+            return new Response(JSON.stringify({ counterFactualAddress }), defaultInit)
+        }
+    } catch(e) {
+        return new Response(JSON.stringify({error: {meesage: (e as Error).message}}), errorResponseInit)
     }
     return new Response(JSON.stringify({error: {meesage: 'Something went wrong.'}}), errorResponseInit)
 });
 
 router.post('/create-revoke-session-key-user-op', async (request) => {
-    const createdUserOp = await createRevokeSessionUserOp(await request.json() as unknown as CreateRevokeSessionKeyUserOpOptions)
-    if (createdUserOp) {
-        return new Response(JSON.stringify(createdUserOp), defaultInit)
+    try {
+        const createdUserOp = await createRevokeSessionUserOp(await request.json() as unknown as CreateRevokeSessionKeyUserOpOptions)
+        if (createdUserOp) {
+            return new Response(JSON.stringify(createdUserOp), defaultInit)
+        }
+    } catch(e) {
+        return new Response(JSON.stringify({error: {meesage: (e as Error).message}}), errorResponseInit)
     }
     return new Response(JSON.stringify({error: {meesage: 'Something went wrong.'}}), errorResponseInit)
 });

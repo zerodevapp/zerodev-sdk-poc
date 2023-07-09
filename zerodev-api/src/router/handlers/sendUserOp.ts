@@ -36,6 +36,7 @@ async function sendUserOp({
 
     } catch(e) {
         console.log(e)
+        throw new Error(JSON.stringify(e))
     }
     return null
 }
