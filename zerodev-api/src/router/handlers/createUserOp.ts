@@ -1,6 +1,6 @@
 import { Client, IUserOperationBuilder, Presets, UserOperationMiddlewareCtx } from "userop";
 import { ethers, BigNumber } from 'ethers'
-import { verifyingPaymaster } from 'userop/dist/preset/middleware';
+import { estimateUserOperationGas, verifyingPaymaster } from 'userop/dist/preset/middleware';
 import {  BUNDLER_URL, PAYMASTER_URL } from '../../constants';
 import { getProjectChainId } from "../../utilities";
 import { CreateUserOpOptions } from "../../../types";
@@ -22,6 +22,7 @@ async function createUserOp({
             provider,
             paymasterMiddleware: verifyingPaymaster(paymasterRpcProvider, {type: 'payg'})
         });
+        kernelAccount.useMiddleware(estimateUserOperationGas(provider))
         const client = await Client.init(provider, kernelAccount.entryPoint.address, chainId);
 
         let builder: IUserOperationBuilder
